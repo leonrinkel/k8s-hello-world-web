@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-hello-world-web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: k8s-hello-world-web
+  template:
+    metadata:
+      labels:
+        app: k8s-hello-world-web
+    spec:
+      containers:
+      - name: k8s-hello-world-web
+        image: leonrinkel/k8s-hello-world-web
+        env:
+        - name: PORT
+          value: "5000"
+        - name: MY_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        ports:
+        - containerPort: 5000
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 1

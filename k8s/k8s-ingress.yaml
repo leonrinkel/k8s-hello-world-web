@@ -1,0 +1,16 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: k8s-hello-world-web
+spec:
+  rules:
+    - host: leonrrrr.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: k8s-hello-world-web
+                port:
+                  number: 5000
