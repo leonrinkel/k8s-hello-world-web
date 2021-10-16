@@ -1,16 +1,17 @@
-kind: Ingress
-apiVersion: networking.k8s.io/v1
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: k8s-hello-world-web
 spec:
-  rules:
-    - host: leonrrrr.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: k8s-hello-world-web
-                port:
-                  number: 5000
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`leonrrrr.com`) && Path(`/`)
+    kind: Rule
+    services:
+    - name: k8s-hello-world-web
+      port: 5000
+  tls:
+    certResolver: myresolver
+    domains:
+    - main: leonrrrr.com
