@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: k8s-hello-world-web
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: k8s-hello-world-web
@@ -28,6 +28,11 @@ spec:
               fieldPath: metadata.name
         ports:
         - containerPort: 5000
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 250m
         livenessProbe:
           httpGet:
             path: /
