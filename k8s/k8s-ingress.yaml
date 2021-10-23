@@ -6,7 +6,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`leonrrrr.com`) && Path(`/`)
+  - match: Host(`leonrrrr.com`) && PathPrefix(`/`)
     kind: Rule
     services:
     - name: k8s-hello-world-web
