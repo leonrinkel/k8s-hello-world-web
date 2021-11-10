@@ -1,3 +1,4 @@
+import { IncomingHttpHeaders } from "http";
 import { IRoute } from "../route";
 
 const nodeName = process.env.MY_NODE_NAME ?? "unknown";
@@ -10,7 +11,7 @@ export class Fib32Route implements IRoute {
     return this.fib(n - 2) + this.fib(n - 1);
   }
 
-  handle(): string {
+  handle({ }: { headers: IncomingHttpHeaders; }): string {
     return `fib(32)=${this.fib(32)}, served by pod ${podName} on node ${nodeName}`;
   }
 

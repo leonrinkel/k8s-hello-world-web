@@ -28,7 +28,10 @@ export class Server implements IServer {
   }
 
   mount(path: string, route: IRoute): void {
-    this.app.use(path, (_, res) => res.end(route.handle()));
+    this.app.use(
+      path,
+      (req, res) => res.end(route.handle({ headers: req.headers} ))
+    );
   }
 
   listen(): Promise<URL> {

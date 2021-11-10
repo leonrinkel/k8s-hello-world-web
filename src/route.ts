@@ -1,3 +1,5 @@
+import { IncomingHttpHeaders } from "http";
+
 export interface IRoute {
-  handle(): string;
+  handle({ headers }: { headers: IncomingHttpHeaders }): string;
 }
