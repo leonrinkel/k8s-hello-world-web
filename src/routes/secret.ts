@@ -7,7 +7,7 @@ const IV = Buffer.alloc(12, 0x69);
 
 export class SecretRoute implements IRoute {
 
-  private secretFlag?: Buffer;
+  private secretFlag?: string;
 
   handle({ headers }: { headers: IncomingHttpHeaders; }): string {
     if (
@@ -18,9 +18,9 @@ export class SecretRoute implements IRoute {
 
     const secret = headers["x-secret"];
     const cipher = crypto.createDecipheriv("aes-256-gcm", KEY, IV);
-    this.secretFlag = cipher.update(secret, "hex");
+    this.secretFlag = cipher.update(secret, "hex").toString("utf8");
     
-    return "ok";
+    return `ok received secret with length ${this.secretFlag.length}`;
   }
 
 }
